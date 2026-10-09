@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Резюме | Софья Долгих</title>
+    <style>
+        /* --- CSS: Внешний вид --- */
+        :root {
+            --bg-color: #f4f4f9;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --accent: #6c63ff;
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #f4f4f9;
+            --card-bg: #2d2d2d;
+            --accent: #a29bfe;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+
+        .contact-info {
+            margin-bottom: 20px;
+            font-style: italic;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        #typing-text {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        #theme-toggle {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: opacity 0.3s;
+        }
+        
+        #theme-toggle:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="theme-toggle">Сменить тему 🌙</button>
+
+    <div class="container">
+        <!-- --- HTML: Структура --- -->
+        <h1>Софья Долгих</h1>
+        <p class="contact-info"><span id="typing-text"></span> | sophia.dolgikh@icloud.com | 89139506295</p>
+
+        <h2>Обо мне</h2>
+        <p>Я учусь создавать сайты и осваиваю HTML, CSS и JavaScript. Люблю решать логические задачи и видеть, как код превращается в красивые интерфейсы.</p>
+
+        <h2>Навыки</h2>
+        <ul>
+            <li><strong>HTML</strong> — создание структуры страниц.</li>
+            <li><strong>CSS</strong> — стилизация, цвета, шрифты, адаптивность.</li>
+            <li><strong>JavaScript</strong> — базовая логика и интерактивность.</li>
+            <li><strong>Git</strong> — работа с репозиториями и контроль версий.</li>
+        </ul>
+
+        <h2>Образование</h2>
+        <p><strong>Курсы по веб-разработке</strong> — изучение основ программирования.</p>
+
+        <h2>Мои проекты</h2>
+        <ul>
+            <li><strong>Сайт про кошек</strong> — моя первая работа с HTML и CSS.</li>
+            <li><strong>Это резюме</strong> — сайт с интерактивной сменой темы и эффектом печати (JS).</li>
+        </ul>
+    </div>
+
+    <script>
+        // --- JavaScript: Логика ---
+
+        // 1. Смена темы (Dark Mode)
+        const toggleButton = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                toggleButton.textContent = 'Светлая тема ☀️';
+            } else {
+                toggleButton.textContent = 'Сменить тему 🌙';
+            }
+        });
+
+        // 2. Эффект печатной машинки
+        const textArray = ["Начинающий веб-разработчик", "Люблю создавать сайты", "Изучаю JavaScript"];
+        let textIndex = 0;
+        let charIndex = 0;
+        const typingElement = document.getElementById('typing-text');
+        const typingSpeed = 100; // Скорость печати (мс)
+        const erasingSpeed = 50; // Скорость стирания (мс)
+        const delayBetweenTexts = 1500; // Пауза перед сменой фразы (мс)
+
+        function type() {
+            if (charIndex < textArray[textIndex].length) {
+                typingElement.textContent += textArray[textIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(type, typingSpeed);
+            } else {
+                setTimeout(erase, delayBetweenTexts);
+            }
+        }
+
+        function erase() {
+            if (charIndex > 0) {
+                typingElement.textContent = textArray[textIndex].substring(0, charIndex - 1);
+                charIndex--;
+                setTimeout(erase, erasingSpeed);
+            } else {
+                textIndex++;
+                if (textIndex >= textArray.length) textIndex = 0;
+                setTimeout(type, typingSpeed + 500);
+            }
+        }
+
+        // Запускаем эффект при загрузке страницы
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(type, 500);
+        });
+    </script>
+
+</body>
+</html>
